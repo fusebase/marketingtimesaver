@@ -11,6 +11,7 @@
 	<link href="/assets/components/mts/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link id="base-style" href="/assets/components/mts/css/acme.css" rel="stylesheet">
 	<link id="base-style-responsive" href="/assets/components/mts/css/acme-responsive.css" rel="stylesheet">
+	<!--<link href="/assets/components/mts/css/retina.css" rel="stylesheet">-->
 	<link href="/assets/components/mts/css/mts.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -35,7 +36,7 @@
     			<form class="form-inline" style="margin-bottom:0px;">
     				<label style="font-size:11px;">Current Project:</label>
     				<select id="mts-project-select">
-    					[[getResources? &tpl=`mts.project.select.item` &tvFilters=`mts_account==[[+modx.user.id]]` &context=`projects` &parents=`0`]]
+    					[[getResources? &tpl=`mts.project.select.item` &tvFilters=`mts_account==[[+mts.account.id]]` &context=`projects` &parents=`0`]]
     				</select>
     				<label style="font-size:11px;"><a href="#projects">Manage Projects</a></label>
     			</form>
@@ -93,6 +94,7 @@
 	<!-- start: JavaScript-->
 	<script src="[[++mts.jquery]]"></script>
 	<script src="[[++mts.bootstrap_js]]"></script>
+	<script src="http://localhost/js/jquery/jquery.form.js"></script>
 	<script src="[[++mts.js]]"></script>
 [[$mts.app.admin.js]]
 </body>

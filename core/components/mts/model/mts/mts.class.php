@@ -15,6 +15,8 @@ class Mts {
     public $rootdomain;
     public $subdomain;
     public $requestUri;
+
+    public $project;
     
     /* MTS constructor */
     function __construct(modX &$modx, array $config = array()) {
@@ -26,6 +28,7 @@ class Mts {
 		$this->config = array_merge(array(
 		    'corePath' => $corePath,
 		    'modelPath' => $corePath.'model/',
+		    'processorsPath' => $corePath.'processors/'
 		), $config);
 		
 		// initialize server variables
@@ -33,6 +36,14 @@ class Mts {
 		$this->setRootDomain();
 		$this->setSubdomain();
 		$this->setRequestUri();
+
+		// run API
+		$parts = explode('/', $this->requestUri);
+		if ($parts[1] == 'api') {
+			$this->api();
+		}
+
+		$this->project->id = $_SESSION['project'];
 
 		// load AWS
 		//require_once $this->config['modelPath'] . 'aws/sdk.class.php';
@@ -46,7 +57,7 @@ class Mts {
     }
 
     /* private function to set the domain */
-    public function setDomain() {
+    private function setDomain() {
     	$this->domain = str_replace('www.', '', $_SERVER['HTTP_HOST']);
     	return $this->domain;
     }
@@ -86,6 +97,7 @@ class Mts {
 		}
 		$request = '/' . $request;
 		$request = str_replace('-cp/', '/cp/', $request);
+		$this->requestUri = $request;
 		return $request;
     }
     
@@ -117,6 +129,21 @@ class Mts {
 			$url = 'www.' . $url;
 		}
 		return 'http://' . $url;
+    }
+
+    /* public function to run the API */
+    public function api() {
+    	$method = $_SERVER['REQUEST_METHOD'];
+    	$processor = str_replace('/api/v1/', '', $this->requestUri);
+    	echo $processor;
+
+    	$_SESSION['project'] = $_POST['project'];
+    	$this->project->id = $_SESSION['project'];
+
+    	//$processor .= 'update';
+    	//$response = $this->modx->runProcessor($processor, $_POST, array('processors_path' => 'core/components/mts/processors/'));
+    	//echo $response->getMessage();
+    	exit();
     }
 
 }

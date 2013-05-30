@@ -2,6 +2,9 @@
 	background: url(/assets/components/mts/images/mts_content_bg_xdljtk.jpg);
 	padding-top: 52px;
 }
+.mts a {
+	/*color: #0088CC;*/
+}
 .mts .navbar-inner { 
 	background: url(/assets/components/mts/images/mts_nav_bg_kr3z6s.jpg) !important;
 }
@@ -28,10 +31,25 @@
 .mts .nav-tabs {
 	margin-top: 10px;
 }
+.mts .tab-pane {
+	padding-top: 10px;
+}
 .mts #mts-project-select {
 	width:auto;
 	margin:0px 8px 0px 6px;
 	max-height:300px;
 	overflow-y:scroll;
 	overflow-x:hidden;
+}
+.mts label {
+	font-size: 12px;
+}
+.mts .required label {
+	font-weight: bold;
+}
+.mts .required label:after {
+	content:" *";
+}
+.mts footer {
+	background: url(/assets/components/mts/images/mts_nav_bg_kr3z6s.jpg) !important;
 }

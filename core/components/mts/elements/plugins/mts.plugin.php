@@ -19,7 +19,8 @@ if ($modx->event->name == 'OnHandleRequest') {
 		case 'app.marketingtimesaver.com':
 		$modx->switchContext('app');
 		$modx->setPlaceholder('mts.token', md5(time()));
-		$modx->setPlaceholder('mts.project', 25);
+		$modx->setPlaceholder('mts.account.id', $modx->user->id);
+		$modx->setPlaceholder('mts.project.id', $mts->project->id);
 		break;
 	}
 }
