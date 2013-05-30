@@ -1,0 +1,37 @@
+.mts {
+	background: url(/assets/components/mts/images/mts_content_bg_xdljtk.jpg);
+	padding-top: 52px;
+}
+.mts .navbar-inner { 
+	background: url(/assets/components/mts/images/mts_nav_bg_kr3z6s.jpg) !important;
+}
+.mts .mts-content {
+	padding: 10px;
+}
+.mts .page-header {
+	margin-bottom: 15px;
+}
+.mts .page-header, .mts .page-header h1 { 
+	margin-top: 0px;
+}
+.mts .page-header h1 {
+	font-size: 24px;
+	line-height: 1;
+	margin-bottom: 4px;
+}
+.mts h2, .mts h3 { 
+	font-weight: normal;
+}
+.mts .page-header { 
+	padding-bottom: 0px;
+}
+.mts .nav-tabs {
+	margin-top: 10px;
+}
+.mts #mts-project-select {
+	width:auto;
+	margin:0px 8px 0px 6px;
+	max-height:300px;
+	overflow-y:scroll;
+	overflow-x:hidden;
+}

@@ -1,0 +1,67 @@
+<?php return array (
+  'preserve_keys' => true,
+  'update_object' => true,
+  'unique_key' => 'text',
+  'related_objects' => 
+  array (
+    'Action' => 
+    array (
+      '50e1ca11dac4164a4738dac1805e644a' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 
+        array (
+          0 => 'namespace',
+          1 => 'controller',
+        ),
+        'class' => 'modAction',
+        'object' => '{"id":1,"namespace":"packman","parent":0,"controller":"index","haslayout":1,"lang_topics":"packman:default,lexicon","assets":"","help_url":""}',
+        'guid' => '328cfc43c61b3500553a2726d241942c',
+        'native_key' => 1,
+        'signature' => 'fe4ac9a3c667145fbeac573be7f9a6f5',
+      ),
+    ),
+  ),
+  'related_object_attributes' => 
+  array (
+    'Action' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 
+      array (
+        0 => 'namespace',
+        1 => 'controller',
+      ),
+    ),
+  ),
+  'namespace' => 'packman',
+  'resolve' => 
+  array (
+    0 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"packman-1.2.0-pl\\/modMenu\\/0f2a908fd651e3c726da75d42cc411c7\\/0\\/","target":"return MODX_CORE_PATH . \'components\\/\';","name":"packman"}',
+    ),
+    1 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"packman-1.2.0-pl\\/modMenu\\/0f2a908fd651e3c726da75d42cc411c7\\/1\\/","target":"return MODX_ASSETS_PATH . \'components\\/\';","name":"packman"}',
+    ),
+    2 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"packman-1.2.0-pl\\/modMenu\\/0f2a908fd651e3c726da75d42cc411c7.tables.resolver.resolver","type":"php","name":"tables.resolver"}',
+    ),
+  ),
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '1703588a3015614ef06da4ffc3c21084',
+  'package' => 'modx',
+  'class' => 'modMenu',
+  'signature' => '0f2a908fd651e3c726da75d42cc411c7',
+  'native_key' => 'packman',
+  'object' => '{"text":"packman","parent":"components","action":1,"description":"packman.menu_desc","icon":"images\\/icons\\/plugin.gif","menuindex":0,"params":"","handler":"","permissions":""}',
+);
