@@ -10,6 +10,7 @@
 }
 .mts .mts-content {
 	padding: 10px;
+	min-height: 500px;
 }
 .mts .page-header {
 	margin-bottom: 15px;
@@ -31,8 +32,14 @@
 .mts .nav-tabs {
 	margin-top: 10px;
 }
+.mts #sidebar-left {
+	margin-top: -11px;
+}
 .mts .tab-pane {
 	padding-top: 10px;
+}
+.mts .tab-pane table {
+	margin-bottom: 0px;
 }
 .mts #mts-project-select {
 	width:auto;

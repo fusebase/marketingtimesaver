@@ -49,9 +49,12 @@
 			<!-- start: Main Menu -->
 			<div id="sidebar-left" class="span1">
 				<div class="nav-collapse sidebar-nav">
-					<ul class="nav nav-tabs nav-stacked main-menu">
-						[[getResources? &tpl=`mts.nav.item` &context=`app` &parents=`3`]]
-					</ul>
+					[[Wayfinder?
+						&startId=`3`
+						&level=`2`
+						&outerClass=`nav nav-tabs nav-stacked main-menu`
+						&rowTpl=`mts.nav.item`
+					]]
 				</div>
 			</div>
 			<!-- end: Main Menu -->
