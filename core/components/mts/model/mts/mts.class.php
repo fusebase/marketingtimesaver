@@ -16,6 +16,7 @@ class Mts {
     public $subdomain;
     public $requestUri;
 
+    public $mts;
     public $project;
     
     /* MTS constructor */
@@ -43,7 +44,17 @@ class Mts {
 			$this->api();
 		}
 
+        // load the project
+        $this->mts->project['id'] = $_SESSION['project'];
 		$this->project->id = $_SESSION['project'];
+        //$this->project
+
+        // load the funnel
+        if (!empty($_SESSION['funnel'])) {
+            $this->mts->funnel = $_SESSION['funnel'];
+            //print_r($_SESSION['funnel']);exit;
+        }
+        //echo '<pre>'; print_r($this->mts); exit;
 
 		// load AWS
 		//require_once $this->config['modelPath'] . 'aws/sdk.class.php';
@@ -131,18 +142,150 @@ class Mts {
 		return 'http://' . $url;
     }
 
+    /* private function to create a funnel */
+    private function createFunnel() {
+
+    }
+
+    /* private function to get a funnel */
+    private function getFunnel($resourceId) {
+        $this->mts->funnel = array();
+        $c = $this->modx->newQuery('modResource');
+        $c->where(array(
+            'id' => $resourceId,
+            'context_key' => 'projects'
+        ));
+        if ($valueResource = $this->modx->getObject('modResource', $c)) {
+            $this->mts->funnel['value'] = $valueResource->toArray();
+
+            $c = $this->modx->newQuery('modTemplateVar');
+            $c->where(array('category' => 15));
+            $tvs = $this->modx->getIterator('modTemplateVar', $c);
+            foreach ($tvs as $tv) {
+                $tvName = $tv->get('name');
+                $tvKey = str_replace('mts_funnel_', '', $tvName);
+                $tvValue = $valueResource->getTVValue($tvName);
+                $this->mts->funnel['value'][$tvKey] = $tvValue;
+            }
+        }
+
+        $c = $this->modx->newQuery('modResource');
+        $c->where(array(
+            'parent' => $resourceId,
+            'context_key' => 'projects'
+        ));
+        $captureResources = $this->modx->getIterator('modResource', $c);
+        foreach ($captureResources as $captureResource) {
+            $captureData = $captureResource->toArray();
+            $c = $this->modx->newQuery('modTemplateVar');
+            $c->where(array('category' => 15));
+            $tvs = $this->modx->getIterator('modTemplateVar', $c);
+            foreach ($tvs as $tv) {
+                $tvName = $tv->get('name');
+                $tvKey = str_replace('mts_funnel_', '', $tvName);
+                $tvValue = $captureResource->getTVValue($tvName);
+                $captureData[$tvKey] = $tvValue;
+            }
+            $this->mts->funnel['capture'][] = $captureData;
+        }
+
+        return $this->mts->funnel;
+    }
+
+    /* private function to load a funnel */
+    private function loadFunnel($resourceId) {
+        $data = $this->getFunnel($resourceId);
+        $_SESSION['funnel'] = $data;
+        return $data;
+    }
+
+    /* private function to update a funnel */
+    private function updateFunnel() {
+
+    }
+
     /* public function to run the API */
     public function api() {
     	$method = $_SERVER['REQUEST_METHOD'];
-    	$processor = str_replace('/api/v1/', '', $this->requestUri);
-    	echo $processor;
+        $request = array_filter(explode('/', str_replace('api/', '', $this->requestUri)));
+        $object = $request[1];
 
-    	$_SESSION['project'] = $_POST['project'];
-    	$this->project->id = $_SESSION['project'];
+        if ($request[1] == 'service') {
+            
+            switch ($request[2]) {
 
-    	//$processor .= 'update';
-    	//$response = $this->modx->runProcessor($processor, $_POST, array('processors_path' => 'core/components/mts/processors/'));
-    	//echo $response->getMessage();
+                case 'switch-account':
+                break;
+
+                case 'switch-project':
+                $_SESSION['project'] = $_POST['project'];
+                $this->project->id = $_SESSION['project'];
+                break;
+
+                case 'load-funnel':
+                $data = $this->loadFunnel($request[3]);
+                echo json_encode($data);
+                break;
+            }
+
+            exit();
+        }
+
+        elseif ($method == 'GET' && empty($request[1])) {
+            $processor = $object . '/getlist';
+        }
+
+        elseif ($method == 'GET' && is_numeric($request[2])) {
+            if ($object == 'funnel') {
+                $data = $this->getFunnel($request[2]);
+            }
+            else {
+                $data = array('id' => $request[2]);
+                $processor = $object . '/get';
+            }
+
+            echo json_encode($data);
+            exit();
+        }
+
+        elseif ($method == 'POST' && count($request) == 1) {
+            $payload = json_decode(@file_get_contents('php://input'), true);
+            if (!empty($_POST)) {
+                $payload = $_POST;
+            }
+            $processor = $object . '/create';
+        }
+
+        elseif ($method == 'POST' && count($request) != 1) {
+            $processor = $object . '/' . $request[2];
+        }
+
+        elseif ($method == 'PUT') {
+            parse_str(@file_get_contents("php://input"), $payload);
+            $processor = $object . '/update';
+        }
+
+        elseif ($method == 'DELETE') {
+            $data = array('id' => $request[2]);
+            $processor = $object . '/delete';
+        }
+
+        $response = $this->modx->runProcessor($processor, $data);
+
+        if ($response->isError()) {
+            return $response->getMessage();
+        }
+        else {
+            $object = $response->getObject();
+            if (is_object($object)) {
+                $json = json_encode($data->toArray());
+            }
+            else {
+                $json = array();
+            }
+        }
+
+        echo $json;
     	exit();
     }
 

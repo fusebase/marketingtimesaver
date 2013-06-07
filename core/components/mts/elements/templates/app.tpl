@@ -36,7 +36,14 @@
     			<form class="form-inline" style="margin-bottom:0px;">
     				<label style="font-size:11px;">Current Project:</label>
     				<select id="mts-project-select">
-    					[[getResources? &tpl=`mts.project.select.item` &tvFilters=`mts_account==[[+mts.account.id]]` &context=`projects` &parents=`0`]]
+    					[[getResources?
+				            &tpl=`mts.project.select.item`
+    						&tvFilters=`mts_account==[[+mts.account.id]]`
+    						&context=`projects`
+    						&parents=`0`
+    						&sortby=`pagetitle`
+							&sortdir=`ASC`
+						]]
     				</select>
     				<label style="font-size:11px;"><a href="#projects">Manage Projects</a></label>
     			</form>
